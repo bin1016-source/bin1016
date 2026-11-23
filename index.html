@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>응급 의료 구글 지도 시각화</title>
+  <title>서울시 4개 구 응급의료기관 Google Maps 시각화</title>
   <style>
     html, body, #map {
       width: 100%;
@@ -17,33 +17,176 @@
   <div id="map"></div>
 
   <script>
-    // 병원 좌표 및 가용 상태 데이터 (필요한 병원 데이터를 이 배열에 추가하세요)
     const hospitals = [
-      {
-        name: "서울대학교병원",
-        addr: "서울특별시 종로구 대학로 101",
-        lat: 37.5798,
-        lng: 126.9990,
-        available: true,
-        status: "수용 가능"
-      },
-      {
-        name: "강북삼성병원",
-        addr: "서울특별시 종로구 새문안로 29",
-        lat: 37.5681,
-        lng: 126.9680,
-        available: false,
-        status: "수용 곤란"
-      },
-      {
-        name: "세브란스병원",
-        addr: "서울특별시 서대문구 연세로 50-1",
-        lat: 37.5621,
-        lng: 126.9407,
-        available: true,
-        status: "수용 가능"
-      }
-    ];
+  {
+    "name": "가톨릭대학교 여의도성모병원",
+    "addr": "서울특별시 영등포구 63로 10, 여의도성모병원 (여의도동)",
+    "lat": 37.51827233800711,
+    "lng": 126.93673129599132,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "강남베드로병원",
+    "addr": "서울특별시 강남구 남부순환로 2649, 베드로병원 (도곡동)",
+    "lat": 37.48561217992573,
+    "lng": 127.0395873429168,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "강북삼성병원",
+    "addr": "서울특별시 종로구 새문안로 29 (평동)",
+    "lat": 37.56849763123383,
+    "lng": 126.96793805451702,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "대림성모병원",
+    "addr": "서울특별시 영등포구 시흥대로 657 (대림동, 대림성모병원)",
+    "lat": 37.49068925436284,
+    "lng": 126.90716948025135,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "더드림병원",
+    "addr": "서울특별시 강남구 선릉로 404, 더드림병원 (대치동)",
+    "lat": 37.5009902618151,
+    "lng": 127.050967336445,
+    "available": false,
+    "status": "🔴 혼잡 / 만실"
+  },
+  {
+    "name": "명지성모병원",
+    "addr": "서울특별시 영등포구 도림로 156, 명지성모병원 (대림동)",
+    "lat": 37.4938507104387,
+    "lng": 126.89925446922592,
+    "available": false,
+    "status": "🔴 혼잡 / 만실"
+  },
+  {
+    "name": "삼성서울병원",
+    "addr": "서울특별시 강남구 일원로 81 (일원동, 삼성의료원)",
+    "lat": 37.48851613490445,
+    "lng": 127.08668245340024,
+    "available": false,
+    "status": "🔴 혼잡 / 만실"
+  },
+  {
+    "name": "서울대학교병원",
+    "addr": "서울특별시 종로구 대학로 101 (연건동)",
+    "lat": 37.57966608924356,
+    "lng": 126.99896308412193,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "서울대학교치과병원",
+    "addr": "서울특별시 종로구 대학로 101 (연건동)",
+    "lat": 37.5804523853297,
+    "lng": 126.997196437908,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "서울적십자병원",
+    "addr": "서울특별시 종로구 새문안로 9, 적십자병원 (평동)",
+    "lat": 37.56715536263689,
+    "lng": 126.96699861289684,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "성애의료재단성애병원",
+    "addr": "서울특별시 영등포구 여의대방로53길 22 (신길동, 성애병원)",
+    "lat": 37.51205044957338,
+    "lng": 126.92236733617032,
+    "available": false,
+    "status": "🔴 혼잡 / 만실"
+  },
+  {
+    "name": "세란병원",
+    "addr": "서울특별시 종로구 통일로 256 (무악동)",
+    "lat": 37.57534016994642,
+    "lng": 126.9577071892358,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "신촌연세병원",
+    "addr": "서울특별시 마포구 서강로 110, 지2층~6층 (신수동)",
+    "lat": 37.5525892651719,
+    "lng": 126.933734666413,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "씨엠병원",
+    "addr": "서울특별시 영등포구 영등포로36길 13 (영등포동4가, 충무병원)",
+    "lat": 37.51884832876216,
+    "lng": 126.90367981067836,
+    "available": false,
+    "status": "🔴 혼잡 / 만실"
+  },
+  {
+    "name": "연세대학교의과대학강남세브란스병원",
+    "addr": "서울특별시 강남구 언주로 211, 강남세브란스병원 (도곡동)",
+    "lat": 37.49280698464548,
+    "lng": 127.04631254186796,
+    "available": false,
+    "status": "🔴 혼잡 / 만실"
+  },
+  {
+    "name": "의료법인인봉의료재단영등포병원",
+    "addr": "서울특별시 영등포구 당산로31길 10 (당산동3가)",
+    "lat": 37.526858089517,
+    "lng": 126.89561402986,
+    "available": false,
+    "status": "🔴 혼잡 / 만실"
+  },
+  {
+    "name": "재단법인베스티안재단베스티안서울병원",
+    "addr": "서울특별시 강남구 도곡로 429 (대치동, 베스티안병원 2층일부 제외)",
+    "lat": 37.49807126965969,
+    "lng": 127.05726710883552,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "차의과학대학교강남차병원",
+    "addr": "서울특별시 강남구 논현로 566, 강남차병원(역삼동650-9, 606-4, 605외2필지(지하7층~지하1층, 지상2층~7층)) (역삼동)",
+    "lat": 37.50680002585087,
+    "lng": 127.03466865188072,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "한강수병원",
+    "addr": "서울특별시 영등포구 영등포로 83, 한강수병원 (양평동1가)",
+    "lat": 37.5224047841717,
+    "lng": 126.890913736375,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  },
+  {
+    "name": "한림대학교 강남성심병원",
+    "addr": "서울특별시 영등포구 신길로 1 (대림동, 강남성심병원)",
+    "lat": 37.4932492859,
+    "lng": 126.9086725295,
+    "available": false,
+    "status": "🔴 혼잡 / 만실"
+  },
+  {
+    "name": "한림대학교한강성심병원",
+    "addr": "서울특별시 영등포구 버드나루로7길 12 (영등포동7가, 한강성심병원)",
+    "lat": 37.52346674579277,
+    "lng": 126.91033000120588,
+    "available": true,
+    "status": "🟢 여유 / 정상"
+  }
+];
 
     function initMap() {
       const map = new google.maps.Map(document.getElementById("map"), {
@@ -84,11 +227,11 @@
 
         marker.addListener("click", () => {
           infoWindow.setContent(
-            `<div style="font-family: sans-serif; min-width: 180px;">
-              <strong>${h.name}</strong><br/>
-              <span style="font-size: 12px; color: #555;">${h.addr}</span><br/>
-              <hr style="margin: 6px 0;"/>
-              <span style="font-size: 12px;">상태: <b>${h.status}</b></span>
+            `<div style="font-family: 'Malgun Gothic', sans-serif; min-width: 210px; padding: 4px;">
+              <div style="font-size: 14px; font-weight: bold; margin-bottom: 6px;">${h.name}</div>
+              <div style="font-size: 12px; color: #555; margin-bottom: 6px;"><b>주소:</b> ${h.addr}</div>
+              <hr style="border: 0; border-top: 1px solid #ddd; margin: 6px 0;"/>
+              <div style="font-size: 13px;"><b>상태:</b> ${h.status}</div>
             </div>`
           );
           infoWindow.open(map, marker);
